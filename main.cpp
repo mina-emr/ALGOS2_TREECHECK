@@ -2,6 +2,9 @@
 #include <fstream>
 #include <cmath>
 #include <vector>
+#include <functional>
+#include <numeric>
+#include <string>
 
 struct Node {
     int key;
