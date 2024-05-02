@@ -21,12 +21,15 @@ Node* newNode(int key) {
 }
 
 Node* insert(Node* node, int key) {
-    if (node == nullptr)
-        return newNode(key);
+    // Wenn der Baum leer ist, wird ein neuer Knoten zugewiesen
+    if (node == nullptr)return newNode(key);
+
+    // Andernfalls wird der Baum rekursiv durchlaufen
     if (key < node->key)
         node->left = insert(node->left, key);
     else if (key > node->key)
         node->right = insert(node->right, key);
+
     return node;
 }
 
@@ -53,25 +56,46 @@ void inOrder(Node* node, std::vector<int>& keys) {
 bool isAVL(Node* node) {
     if (node == nullptr)
         return true;
+
     int balance = balanceFactor(node);
-    if (balance > 1 || balance < -1)
+    if (balance > 1 || balance < -1) {
+        std::cout << "bal(" << node->key << ") = " << balance << " (AVL violation!)\n";
+        isAVL(node->left) && isAVL(node->right);
         return false;
+    }
+    std::cout << "bal(" << node->key << ") = " << balance << "\n";
     return isAVL(node->left) && isAVL(node->right);
+}
+
+void checkAVL(Node* root) {
+    if (isAVL(root))
+        std::cout << "AVL: yes\n";
+    else
+        std::cout << "AVL: no\n";
 }
 
 int main() {
     Node* root = nullptr;
     std::ifstream file("filename.txt");
     int key;
+    std::vector<int> keys;
+    //Checken ob das File geöffnet werden kann
+    if (!file.is_open()){
+        std::cout << "Error opening file." << std::endl;
+        return 1;
+    }
     while (file >> key) {
         root = insert(root, key);
     }
     file.close();
-
-    std::vector<int> keys;
     inOrder(root, keys);
-
-    std::cout << "AVL: " << (isAVL(root) ? "yes" : "no") << std::endl;
+	// Ausgabe der Schlüsselwerte
+    std::cout << "Werte Inorder: ";
+    for (int key : keys) {
+        std::cout << key << " ";
+    }
+    std::cout << std::endl;
+    checkAVL(root);
     std::cout << "min: " << keys.front() << ", max: " << keys.back() << ", avg: " << std::accumulate(keys.begin(), keys.end(), 0.0) / keys.size() << std::endl;
 
     return 0;
