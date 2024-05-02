@@ -103,6 +103,19 @@ bool isSubtree(Node* root, Node* subtree) {
 
 
 int main() {
+    std::cout << "                       miau.   \n";
+    std::cout << "  ,-.       _,---._ __  / \\ \n";
+    std::cout << " /  )    .-'       `./ /   \\ \n";
+    std::cout << "(  (   ,'            `/    /| \n";
+    std::cout << " \\  `-\"             \\\"\\   / | \n";
+    std::cout << "  `.              ,  \\ \\ /  | \n";
+    std::cout << "   /`.          ,'-`----Y   | \n";
+    std::cout << "  (            ;        |   ' \n";
+    std::cout << "  |  ,-.    ,-'         |  / \n";
+    std::cout << "  |  | (   |            | / \n";
+    std::cout << "  )  |  \\  `.___________|/ \n";
+    std::cout << "  `--'   `--'\n";
+
     Node* root = nullptr;
     std::string filename;
     std::cout << "Please enter the filename: ";
