@@ -118,65 +118,83 @@ int main() {
 
     Node* root = nullptr;
     std::string filename;
-    std::cout << "Please enter the filename: ";
+
+    // Print text in blue color
+    std::cout << "\033[1;34mPlease enter the filename: \033[0m";
     std::cin >> filename;
+
     std::ifstream file(filename);
     int key;
     std::vector<int> keys;
-    //Checken ob das File geöffnet werden kann
-    if (!file.is_open()){
-        std::cout << "Error opening file." << std::endl;
+
+    // Check if the file can be opened
+    if (!file.is_open()) {
+        // Print error message in red color
+        std::cout << "\033[1;31mError opening file.\033[0m\n";
         return 1;
     }
+
     while (file >> key) {
         root = insert(root, key);
     }
     file.close();
 
-    //AVL
+    // AVL
     checkAVL(root);
-    //Ausgabe min, max, avg
+
+    // Output min, max, avg
     inOrder(root, keys);
     std::cout << std::endl;
     std::cout << "min: " << keys.front() << ", max: " << keys.back() << ", avg: " << std::accumulate(keys.begin(), keys.end(), 0.0) / keys.size() << std::endl;
     std::cout << std::endl;
 
     int choice;
-    std::cout << "Please choose the type of search:\n1. Einfache Suche\n2. Subtree Suche\n\n";
+
+    // Print text in yellow color
+    std::cout << "\033[1;33mPlease choose the type of search:\n1. Einfache Suche\n2. Subtree Suche\n\n\033[0m";
     std::cin >> choice;
+
     switch(choice) {
         case 1: {
-            std::cout << "\nEinfache Suche" << std::endl;
+            // Print text in green color
+            std::cout << "\033[1;32m\nEinfache Suche\n\033[0m";
             std::cout << "Please enter the key to search: ";
             std::cin >> key;
             searchkey(root, key, "");
             break;
         }
         case 2: {
-            std::cout << "\nSubtree Suche" << std::endl;
+            // Print text in green color
+            std::cout << "\033[1;32m\nSubtree Suche\n\033[0m";
             Node* subtree = nullptr;
             std::cout << "Please enter the filename for the subtree: ";
             std::cin >> filename;
             std::ifstream subtreeFile(filename);
             if (!subtreeFile.is_open()){
-                std::cout << "Error opening file." << std::endl;
+                // Print error message in red color
+                std::cout << "\033[1;31mError opening file.\033[0m\n";
                 return 1;
             }
             while (subtreeFile >> key) {
                 subtree = insert(subtree, key);
             }
             subtreeFile.close();
-            // Überprüfen, ob der Subtree im Suchbaum vorhanden ist
+            // Check if the subtree is present in the search tree
             if (isSubtree(root, subtree))
-                std::cout << "Subtree found." << std::endl;
+                // Print message in green color
+                std::cout << "\033[1;32mSubtree found.\033[0m\n";
             else
-                std::cout << "Subtree not found!" << std::endl;
+                // Print message in red color
+                std::cout << "\033[1;31mSubtree not found!\033[0m\n";
             break;
         }
         default: {
-            std::cout << "Invalid choice!" << std::endl;
+            // Print error message in red color
+            std::cout << "\033[1;31mInvalid choice!\033[0m\n";
             return 1;
         }
     }
+
     return 0;
 }
+
